@@ -1,0 +1,63 @@
+<< Notes >>
+
+TDD code layers:
+  - Testing Layer: contains testing unit logic.
+  - Domain Layer: contains logic behind the application, e.g. Sum().
+
+
+TDD (test-driven development) order approach:
+  1. Write Test code (in Domain.Test layer)
+  2. Write Production Code (separated class library)
+  3. After the Test code works fine, copy the Test code to the Domain layer and delete the one in the Domain.Test layer
+
+
+Step by step of this approach:
+  1. think about a scenario.
+  2. write test logic that implements undeclare method (the method that will be tested but has not been created yet).
+  3. declare that method to make the test code to be able to be compiled (not even care about the actual logic.)
+  4. complete both test code's logic and production code's logic (if not completed yet)
+
+
+Start writing test code:
+-> use xUnit for testing -> install nuGet package: xUnit, xUnit.Runner.Console, xUnit.Runner.visualstudio
+-> Create a test solution (the name should end with .Tests)
+	-> The logic of the test code should include:
+		- Expected value -> manually declare.
+		- Actual value -> the result value of implementing testing logic.
+		- Assert (test result) -> Does the actual value and expected value match? the code is as below:
+			Assert.Equal(expected, actual);
+-> Add reference from production code to test code. 
+	- E.g. Sum() location in production code. Since Sum() is in the production code layer (different solution) -> need to add a reference in the test layer (link the production code to the test code) -> right-click on the solution > add > reference > tick "Domain" > click select.
+	- implement Sum() by creating an instance of an object in the Domain layer.
+-> Running test -> right click > "Run Test"
+
+
+Red-Green-Refactoring concept:
+  1. write production code.
+  2. improve the test code for readability and understanding in the long term.
+  3. write the next test.
+
+
+Shorten display method name (remove its path):
+	- create a JSON file. -> xunit.runner.json
+	- within JSON file:
+		{
+		    "methodDisplay": "method"
+		}
+	- right click on JSON file > properties > "copy to output folder" field, set to "copy if newer"
+	- Build solution
+
+
+Attribute/tag on top of the test method:
+- [Fact]: default tag for test code, Cannot pass parameter
+- [Theory]: allow the tester to test with different values by passing different parameters to the test method
+- [InlineData()]: passing the value as parameters to that test function. YOU CAN HAVE THIS TAG MULTIPLE LINE. E.g. 
+	[Theory]
+	[InlineData(4, 3, 7)]
+	[InlineData(21, 25.5, 46.5)]
+	[InlineData(double.MaxValue, 10, doubleMaxVlue)]
+	Public void TestSum(double x, double y, double expected) 
+	{
+		var actual = Sum(x, y);
+		...
+	}
