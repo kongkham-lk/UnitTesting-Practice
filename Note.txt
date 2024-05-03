@@ -25,7 +25,9 @@ Start writing test code:
 		- Expected value -> manually declare.
 		- Actual value -> the result value of implementing testing logic.
 		- Assert (test result) -> Does the actual value and expected value match? the code is as below:
-			Assert.Equal(expected, actual);
+			Assert.Equal(expected, actual); // check if equal
+			Assert.True(actual.Length > 0); // if statement
+			Assert.Throws<ObjectType>(() => Example.ReadText()) // throw exception if the pass-in action does not work => THE EXCEPTION TYPE NEED TO BE CORRECTED
 -> Add reference from production code to test code. 
 	- E.g. Sum() location in production code. Since Sum() is in the production code layer (different solution) -> need to add a reference in the test layer (link the production code to the test code) -> right-click on the solution > add > reference > tick "Domain" > click select.
 	- implement Sum() by creating an instance of an object in the Domain layer.
